@@ -96,51 +96,39 @@ int main() {
     int t;
     cin >> t;
     while (t--) {
-        int n; cin >> n;
-        if(n % 2 == 0) cout << n / 2 << " " << n / 2 << endl;
-        else if((n % 10) == 1) cout << n / 2 << " " << (n / 2) + 1 << endl;
-        else
-        {
-            int num1 = 0, num2 = 0;
-            bool flag = false;
-            while(n > 0)
-            {
-                int tmp = n % 10;
-                if(tmp % 2 == 0)
-                {
-                    num1 = num1 * 10 + (tmp / 2);
-                    num2 = num2 * 10 + (tmp / 2);
-                }
-                else
-                {
-                    if(flag)
-                    {
-                        num1 = num1 * 10 + (tmp / 2);
-                        num2 = num2 * 10 + (tmp / 2) + 1;
-                    }
-                    else
-                    {
-                        num1 = num1 * 10 + (tmp / 2) + 1;
-                        num2 = num2 * 10 + (tmp / 2);
-                    }
-                    flag = !flag;
-                }
-                n /= 10;
-            }
-            int res1 = 0, res2 = 0;
-            while(num1 > 0)
-            {
-                res1 = res1 * 10 + num1 % 10;
-                num1 /= 10;
-            }
-            while(num2 > 0)
-            {
-                res2 = res2 * 10 + num2 % 10;
-                num2 /= 10;
-            }
-            go:;
-            cout << res1 << " " << res2 << endl;
+        int n;
+        cin >> n;
+        vector<int> v(n);
+        for (int i = 0; i < n; ++i) {
+            cin >> v[i];
         }
+        vector<int> r(n, 0), l(n, 0);
+        for (int i = 0; i < n; ++i) {
+            if (i == 0) {
+                if (v[i] == 2) {
+                    r[i]++;
+                }
+            } else if (v[i] == 2) r[i] = r[i - 1] + 1;
+            else r[i] = r[i - 1];
+        }
+        for (int i = n - 1; i >= 0; --i) {
+            if (i == n - 1) {
+                if (v[i] == 2) {
+                    l[i]++;
+                }
+            } else if (v[i] == 2) l[i] = l[i + 1] + 1;
+            else l[i] = l[i + 1];
+        }
+        bool flag = false;
+        for (int i = 0; i < n - 1; ++i) {
+            if(r[i] == l[i + 1])
+            {
+                cout << i + 1 << endl;
+                goto go;
+            }
+        }
+        cout << -1 << endl;
+        go:;
     }
     return 0;
 }
