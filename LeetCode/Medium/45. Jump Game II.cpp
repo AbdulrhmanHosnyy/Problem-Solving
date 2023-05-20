@@ -1,18 +1,16 @@
-class Solution {
-public:
-    int jump(vector<int>& nums) {
-        int jumps = 0, left = 0, right = 0;
-        while(right < nums.size() - 1)
+public class Solution {
+    public int Jump(int[] nums) {
+        int answer = 0;
+        int l = 0, r = 0;
+        while(r < nums.Length - 1)
         {
-            int newR = right + 1;
-            for(int i = left; i <= right; i++)
-            {
-                newR = max(newR, i + nums[i]);
-            }
-            left = right + 1;
-            right = newR;
-            jumps++;
+            int farthest = 0;
+            for(int i = l; i <= r; i++)
+                farthest = Math.Max(farthest, nums[i] + i);
+            l = r + 1;
+            r = farthest;
+            answer++;
         }
-        return jumps;
+        return answer;
     }
-};
+}
